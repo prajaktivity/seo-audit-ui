@@ -15,6 +15,7 @@ export default function SEOPage() {
   const [url, setUrl] = useState("");
   const [result, setResult] = useState<SEOResult | null>(null);
   const [loading, setLoading] = useState(false);
+  const [tips, setTips] = useState<string[]>([]);
 
   const analyzeSEO = async () => {
     try {
@@ -26,6 +27,14 @@ export default function SEOPage() {
 
       const data = await response.json();
       setResult(data.data);
+
+        // Recommendations API
+    const recResponse = await fetch(
+        `http://127.0.0.1:8000/recommendations?url=${url}`
+      );
+      const recData = await recResponse.json();
+  
+      setTips(recData.tips || []);
 
     } catch (err) {
       console.log(err);
@@ -127,8 +136,22 @@ export default function SEOPage() {
               <p>{result.images_without_alt}</p>
             </div>
 
+            {/* RECOMMENDATIONS */}
+            {tips.length > 0 && (
+            <div className="bg-white/10 p-4 rounded-xl">
+                <p className="text-gray-300 mb-2">Recommendations</p>
+
+                <ul className="list-disc ml-5 space-y-1">
+                {tips.map((tip, i) => (
+                    <li key={i}>{tip}</li>
+                ))}
+                </ul>
+            </div>
+            )}
           </div>
-        )}
+        )
+        
+        }
 
       </div>
     </main>
