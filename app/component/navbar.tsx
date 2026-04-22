@@ -13,6 +13,7 @@ export default function Navbar() {
           <Link href="/">Home</Link>
           <Link href="/seo-audit">SEO Audit</Link>
           <Link href="/keyword-density">Keyword</Link>
+          <Link href="/broken-links">Broken Links</Link>
         </div>
 
       </div>
