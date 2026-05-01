@@ -26,8 +26,8 @@ export default function SEOPage() {
       }
   
       const [seoRes, recRes] = await Promise.all([
-        fetch(`http://127.0.0.1:8000/seo-audit?url=${url}`),
-        fetch(`http://127.0.0.1:8000/recommendations?url=${url}`)
+        fetch(`https://seo-audit-tool-jifd.onrender.com/seo-audit?url=${url}`),
+        fetch(`https://seo-audit-tool-jifd.onrender.com/recommendations?url=${url}`)
       ]);
   
       const seoData = await seoRes.json();
@@ -49,7 +49,7 @@ export default function SEOPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black text-white pt-24 px-4">
+    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black text-white">
 
       {/* ✅ Navbar */}
       <Navbar />
@@ -79,6 +79,12 @@ export default function SEOPage() {
     Analyzing website... 🚀
   </p>
 )}
+<button
+            onClick={analyzeSEO}
+            className="bg-purple-500 hover:bg-purple-600 px-6 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105"
+          >
+            {loading ? "Checking..." : "Check Links"}
+          </button>
         </div>
 
         {/* EMPTY STATE */}

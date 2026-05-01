@@ -14,10 +14,10 @@ export default function Dashboard() {
       setData(null);
 
       const [seoRes, recRes, keywordRes, linkRes] = await Promise.all([
-        fetch(`http://127.0.0.1:8000/seo-audit?url=${url}`),
-        fetch(`http://127.0.0.1:8000/recommendations?url=${url}`),
-        fetch(`http://127.0.0.1:8000/keyword-density?url=${url}&keyword=seo`),
-        fetch(`http://127.0.0.1:8000/broken-links?url=${url}`)
+        fetch(`https://seo-audit-tool-jifd.onrender.com/seo-audit?url=${url}`),
+        fetch(`https://seo-audit-tool-jifd.onrender.com/recommendations?url=${url}`),
+        fetch(`https://seo-audit-tool-jifd.onrender.com/keyword-density?url=${url}&keyword=seo`),
+        fetch(`https://seo-audit-tool-jifd.onrender.com/broken-links?url=${url}`)
       ]);
 
       const seo = await seoRes.json();
@@ -28,7 +28,7 @@ export default function Dashboard() {
       setData({
         seo: seo.data,
         tips: rec.tips,
-        keyword: keyword.data,
+        keyword: keyword,
         links: links.data
       });
 
@@ -46,11 +46,11 @@ export default function Dashboard() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black text-white pt-24 px-4">
-      
+    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black text-white" >
+       
       <Navbar />
 
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-3xl mx-auto pt-24 px-4">
 
         {/* HEADER */}
         <div className="text-center mb-10">
@@ -111,8 +111,9 @@ export default function Dashboard() {
               {/* KEYWORD */}
               <div className="bg-white/10 p-5 rounded-xl">
                 <h3 className="font-semibold mb-3">Keyword Insights</h3>
-                <p>Keyword: {data.keyword.keyword}</p>
-                <p>Density: {data.keyword.keyword_density}</p>
+            <p>Keyword Count: {data.keyword.keyword}</p>
+            <p>Density: {data.keyword.density}</p>
+               
               </div>
 
               {/* LINKS */}

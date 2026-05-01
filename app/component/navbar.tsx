@@ -27,7 +27,7 @@ export default function Navbar() {
           <Link href="/" className={linkClass("/")}>Home</Link>
           <Link href="/dashboard" className={linkClass("/dashboard")}>Dashboard</Link>
           <Link href="/seo-audit" className={linkClass("/seo-audit")}>SEO Audit</Link>
-          <Link href="/keyword-density" className={linkClass("/keyword-density")}>Keyword</Link>
+          <Link href="/keywords" className={linkClass("/keyword-density")}>Keyword</Link>
           <Link href="/broken-links" className={linkClass("/broken-links")}>Links</Link>
         </div>
 

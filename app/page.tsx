@@ -20,7 +20,7 @@ export default function Home() {
             SEO Audit
           </a>
 
-          <a href="/keyword-density" className="bg-purple-500 px-6 py-3 rounded-xl">
+          <a href="/keywords" className="bg-purple-500 px-6 py-3 rounded-xl">
             Keyword Tool
           </a>
         </div>
