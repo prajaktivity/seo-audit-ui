@@ -10,18 +10,19 @@ export default function KeywordPage() {
 
   const analyze = async () => {
     const res = await fetch(
-      `http://127.0.0.1:8000/keyword-density?url=${url}&keyword=${keyword}`
+      `https://seo-audit-tool-jifd.onrender.com/keyword-density?url=${url}&keyword=${keyword}`
     );
     const data = await res.json();
-    setResult(data.data);
+    console.log(data.data);
+    setResult(data);
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black text-white pt-24">
+    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black text-white">
       
       <Navbar />
 
-      <div className="max-w-3xl mx-auto p-6">
+      <div className="max-w-3xl mx-auto p-6 pt-24 px-4">
         <input
           className="w-full p-4 rounded-xl bg-white/20 mb-4"
           placeholder="Enter URL"
@@ -43,9 +44,8 @@ export default function KeywordPage() {
 
         {result && (
           <div className="mt-6">
-            <p>Total Words: {result.total_words}</p>
-            <p>Keyword Count: {result.keyword_count}</p>
-            <p>Density: {result.keyword_density}</p>
+            <p>Keyword Count: {result.keyword}</p>
+            <p>Density: {result.density}</p>
           </div>
         )}
       </div>
