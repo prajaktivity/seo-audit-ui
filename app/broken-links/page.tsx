@@ -32,12 +32,12 @@ export default function BrokenLinksPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black text-white">
+    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black text-white pt-24">
       
       {/* Navbar */}
       <Navbar />
 
-      <div className="max-w-3xl mx-auto backdrop-blur-lg bg-white/10 border border-white/20 shadow-2xl rounded-3xl p-8 pt-24 px-4">
+      <div className="max-w-3xl mx-auto backdrop-blur-lg bg-white/10 border border-white/20 shadow-2xl rounded-3xl p-8">
 
         <h1 className="text-4xl font-bold text-center mb-2">
           Broken Links Checker 🔗
