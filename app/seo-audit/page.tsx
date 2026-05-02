@@ -49,7 +49,7 @@ export default function SEOPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black text-white">
+    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black text-white pt-24">
 
       {/* ✅ Navbar */}
       <Navbar />

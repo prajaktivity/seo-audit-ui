@@ -23,21 +23,20 @@ export default function Navbar() {
         </Link>
 
         {/* DESKTOP MENU */}
-        <div className="hidden md:flex gap-8 text-sm">
+        <div className="hidden md:flex gap-4 text-sm">
           <Link href="/" className={linkClass("/")}>Home</Link>
-          <Link href="/dashboard" className={linkClass("/dashboard")}>Dashboard</Link>
           <Link href="/seo-audit" className={linkClass("/seo-audit")}>SEO Audit</Link>
-          <Link href="/keywords" className={linkClass("/keyword-density")}>Keyword</Link>
+          <Link href="/keywords" className={linkClass("/keywords")}>Keyword</Link>
           <Link href="/broken-links" className={linkClass("/broken-links")}>Links</Link>
         </div>
 
         {/* CTA BUTTON */}
-        <Link
+        {/* <Link
           href="/dashboard"
           className="hidden md:block bg-gradient-to-r from-purple-500 to-indigo-500 px-4 py-2 rounded-lg text-sm font-medium hover:scale-105 transition"
         >
           Try Now
-        </Link>
+        </Link> */}
 
       </div>
     </nav>
