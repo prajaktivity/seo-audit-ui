@@ -10,10 +10,11 @@ export default function KeywordPage() {
 
   const analyze = async () => {
     const res = await fetch(
-      `http://127.0.0.1:8000/keyword-density?url=${url}&keyword=${keyword}`
+      `https://seo-audit-tool-jifd.onrender.com/keyword-density?url=${url}&keyword=${keyword}`
     );
     const data = await res.json();
-    setResult(data.data);
+    console.log(data.data);
+    setResult(data);
   };
 
   return (
@@ -21,34 +22,39 @@ export default function KeywordPage() {
       
       <Navbar />
 
-      <div className="max-w-3xl mx-auto p-6">
-        <input
-          className="w-full p-4 rounded-xl bg-white/20 mb-4"
-          placeholder="Enter URL"
-          onChange={(e) => setUrl(e.target.value)}
-        />
+      <div className="max-w-3xl mx-auto backdrop-blur-lg bg-white/10 border border-white/20 shadow-2xl rounded-3xl p-8">
 
-        <input
-          className="w-full p-4 rounded-xl bg-white/20"
-          placeholder="Enter Keyword"
-          onChange={(e) => setKeyword(e.target.value)}
-        />
+  <h1 className="text-4xl font-bold text-center mb-2">
+    Keyword
+  </h1>
 
-        <button
-          onClick={analyze}
-          className="mt-4 bg-purple-500 px-6 py-3 rounded-xl"
-        >
-          Analyze Keyword
-        </button>
+  <p className="text-center text-gray-300 mb-6">
+    Optimize keywords for better search visibility.
+  </p>
 
-        {result && (
-          <div className="mt-6">
-            <p>Total Words: {result.total_words}</p>
-            <p>Keyword Count: {result.keyword_count}</p>
-            <p>Density: {result.keyword_density}</p>
-          </div>
-        )}
-      </div>
+  <div className="space-y-4">
+
+    <input
+      className="w-full p-4 rounded-xl bg-white/20"
+      placeholder="Enter URL"
+      onChange={(e) => setUrl(e.target.value)}
+    />
+
+    <input
+      className="w-full p-4 rounded-xl bg-white/20"
+      placeholder="Enter Keyword"
+      onChange={(e) => setKeyword(e.target.value)}
+    />
+
+    <button
+      onClick={analyze}
+      className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 px-6 py-3 rounded-xl"
+    >
+      Analyze Keyword
+    </button>
+
+  </div>
+</div>
     </main>
   );
 }

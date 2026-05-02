@@ -19,7 +19,7 @@ export default function BrokenLinksPage() {
       setLoading(true);
 
       const res = await fetch(
-        `http://127.0.0.1:8000/broken-links?url=${url}`
+        `https://seo-audit-tool-jifd.onrender.com/broken-links?url=${url}`
       );
       const data = await res.json();
 
@@ -32,7 +32,7 @@ export default function BrokenLinksPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black text-white pt-24 px-4">
+    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black text-white pt-24">
       
       {/* Navbar */}
       <Navbar />

@@ -20,29 +20,28 @@ export default function SEOPage() {
   const analyzeSEO = async () => {
     try {
       setLoading(true);
-
-      const response = await fetch(
-        `http://127.0.0.1:8000/seo-audit?url=${url}`
-      );
-
-      const data = await response.json();
-      setResult(data.data);
-
-        // Recommendations API
-    const recResponse = await fetch(
-        `http://127.0.0.1:8000/recommendations?url=${url}`
-      );
-      const recData = await recResponse.json();
+      if (!url) {
+        alert("Please enter a valid URL");
+        return;
+      }
   
+      const [seoRes, recRes] = await Promise.all([
+        fetch(`https://seo-audit-tool-jifd.onrender.com/seo-audit?url=${url}`),
+        fetch(`https://seo-audit-tool-jifd.onrender.com/recommendations?url=${url}`)
+      ]);
+  
+      const seoData = await seoRes.json();
+      const recData = await recRes.json();
+  
+      setResult(seoData.data);
       setTips(recData.tips || []);
-
+  
     } catch (err) {
       console.log(err);
     } finally {
       setLoading(false);
     }
   };
-
   const getScoreColor = (score: number) => {
     if (score >= 80) return "text-green-400";
     if (score >= 50) return "text-yellow-400";
@@ -50,7 +49,7 @@ export default function SEOPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black text-white pt-24 px-4">
+    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black text-white pt-24">
 
       {/* ✅ Navbar */}
       <Navbar />
@@ -75,19 +74,24 @@ export default function SEOPage() {
             className="flex-1 p-4 rounded-xl bg-white/20 border border-white/20 outline-none placeholder:text-gray-300"
           />
 
-          <button
+{loading && (
+  <p className="text-center text-purple-300 mt-6 animate-pulse">
+    Analyzing website... 🚀
+  </p>
+)}
+<button
             onClick={analyzeSEO}
-            className="bg-indigo-500 hover:bg-indigo-600 px-6 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105"
+            className="bg-purple-500 hover:bg-purple-600 px-6 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105"
           >
-            {loading ? "Analyzing SEO..." : "Analyze"}
+            {loading ? "Checking..." : "Check Links"}
           </button>
         </div>
 
         {/* EMPTY STATE */}
         {!result && !loading && (
           <p className="text-center text-gray-400 mt-6">
-            Enter a URL and click Analyze to see SEO insights 🚀
-          </p>
+          Paste any website URL to get SEO insights, issues, and recommendations 🚀
+        </p>
         )}
 
         {/* RESULT */}
@@ -99,9 +103,9 @@ export default function SEOPage() {
               <div className="bg-white/10 p-4 rounded-xl">
                 <p className="text-gray-300">SEO Score</p>
 
-                <h2 className={`text-3xl font-bold ${getScoreColor(result.seo_score)}`}>
-                  {result.seo_score}
-                </h2>
+                <h2 className={`text-5xl font-bold ${getScoreColor(result.seo_score)}`}>
+  {result.seo_score}
+</h2>
 
                 <p className="text-sm text-gray-300">
                   {result.seo_score >= 80
