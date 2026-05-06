@@ -18,16 +18,44 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
 
         {/* LOGO */}
+
+        <Link href="/" className="text-xl font-bold">
+
         <Link href="/" className="text-xl font-bold text-white">
+
           RankLens 🚀
         </Link>
 
         {/* DESKTOP MENU */}
+
+        <div className="hidden md:flex gap-6 text-sm">
+
         <div className="hidden md:flex gap-4 text-sm">
+
           <Link href="/" className={linkClass("/")}>Home</Link>
           <Link href="/seo-audit" className={linkClass("/seo-audit")}>SEO Audit</Link>
           <Link href="/keywords" className={linkClass("/keywords")}>Keyword</Link>
           <Link href="/broken-links" className={linkClass("/broken-links")}>Links</Link>
+
+        </div>
+
+        {/* MOBILE BUTTON */}
+        <button
+          className="md:hidden text-2xl"
+          onClick={() => setOpen(!open)}
+        >
+          ☰
+        </button>
+      </div>
+
+      {/* MOBILE MENU */}
+      {open && (
+        <div className="md:hidden bg-black/90 px-6 pb-4 text-white space-y-2">
+          <Link href="/" className={linkClass("/")} onClick={() => setOpen(false)}>Home</Link>
+          <Link href="/seo-audit" className={linkClass("/seo-audit")} onClick={() => setOpen(false)}>SEO Audit</Link>
+          <Link href="/keywords" className={linkClass("/keywords")} onClick={() => setOpen(false)}>Keyword</Link>
+          <Link href="/broken-links" className={linkClass("/broken-links")} onClick={() => setOpen(false)}>Links</Link>
+
         </div>
 
         {/* CTA BUTTON */}
