@@ -18,32 +18,30 @@ export default function SEOPage() {
   const [tips, setTips] = useState<string[]>([]);
 
   const analyzeSEO = async () => {
-    if (!url) {
-      alert("Enter a valid URL");
-      return;
-    }
-
     try {
       setLoading(true);
-
+      if (!url) {
+        alert("Please enter a valid URL");
+        return;
+      }
+  
       const [seoRes, recRes] = await Promise.all([
         fetch(`https://seo-audit-tool-jifd.onrender.com/seo-audit?url=${url}`),
         fetch(`https://seo-audit-tool-jifd.onrender.com/recommendations?url=${url}`)
       ]);
-
+  
       const seoData = await seoRes.json();
       const recData = await recRes.json();
-
+  
       setResult(seoData.data);
       setTips(recData.tips || []);
-
+  
     } catch (err) {
       console.log(err);
     } finally {
       setLoading(false);
     }
   };
-
   const getScoreColor = (score: number) => {
     if (score >= 80) return "text-green-400";
     if (score >= 50) return "text-yellow-400";
@@ -51,116 +49,113 @@ export default function SEOPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black text-white pt-24 px-4">
+    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black text-white pt-24">
 
+      {/* ✅ Navbar */}
       <Navbar />
 
-      <div className="max-w-4xl mx-auto bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-xl">
+      <div className="max-w-3xl mx-auto backdrop-blur-lg bg-white/10 border border-white/20 shadow-2xl rounded-3xl p-8">
 
-        {/* HEADER */}
         <h1 className="text-4xl font-bold text-center mb-2">
-          SEO Audit 🔍
+          SEO Audit Tool 🚀
         </h1>
 
-        <p className="text-center text-gray-400 mb-8">
-          Get a complete SEO health report in seconds
+        <p className="text-center text-gray-300 mb-8">
+          Analyze your website SEO instantly with AI-like insights.
         </p>
 
         {/* INPUT */}
         <div className="flex flex-col md:flex-row gap-4">
           <input
             type="text"
-            placeholder="https://yourwebsite.com"
+            placeholder="Enter Website URL..."
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            className="flex-1 p-4 rounded-xl bg-white/10 border border-white/10 outline-none placeholder:text-gray-400"
+            className="flex-1 p-4 rounded-xl bg-white/20 border border-white/20 outline-none placeholder:text-gray-300"
           />
 
-          <button
+{loading && (
+  <p className="text-center text-purple-300 mt-6 animate-pulse">
+    Analyzing website... 🚀
+  </p>
+)}
+<button
             onClick={analyzeSEO}
-            className="bg-indigo-500 hover:bg-indigo-600 px-6 py-4 rounded-xl font-semibold transition hover:scale-105"
+            className="bg-purple-500 hover:bg-purple-600 px-6 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105"
           >
-            {loading ? "Analyzing..." : "Analyze SEO"}
+            {loading ? "Checking..." : "Check Links"}
           </button>
         </div>
 
-        {/* LOADING */}
-        {loading && (
-          <p className="text-center text-indigo-400 mt-6 animate-pulse">
-            Scanning website...
-          </p>
-        )}
-
-        {/* EMPTY */}
+        {/* EMPTY STATE */}
         {!result && !loading && (
-          <p className="text-center text-gray-500 mt-6">
-            Enter a URL to start analysis 🚀
-          </p>
+          <p className="text-center text-gray-400 mt-6">
+          Paste any website URL to get SEO insights, issues, and recommendations 🚀
+        </p>
         )}
 
         {/* RESULT */}
         {result && (
-          <div className="mt-10 space-y-6">
+          <div className="mt-10 space-y-4">
 
-            {/* SCORE */}
-            <div className="bg-white/5 p-6 rounded-2xl text-center">
-              <p className="text-gray-400">SEO Score</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-              <h2 className={`text-6xl font-bold ${getScoreColor(result.seo_score)}`}>
-                {result.seo_score}
-              </h2>
+              <div className="bg-white/10 p-4 rounded-xl">
+                <p className="text-gray-300">SEO Score</p>
 
-              <p className="text-gray-400 mt-2">
-                {result.seo_score >= 80
-                  ? "Excellent Optimization"
-                  : result.seo_score >= 50
-                  ? "Needs Improvement"
-                  : "Poor SEO"}
-              </p>
-            </div>
+                <h2 className={`text-5xl font-bold ${getScoreColor(result.seo_score)}`}>
+  {result.seo_score}
+</h2>
 
-            {/* DETAILS */}
-            <div className="grid md:grid-cols-2 gap-4">
-
-              <div className="bg-white/5 p-4 rounded-xl">
-                <p className="text-gray-400">Title Status</p>
-                <p className="text-xl font-semibold">{result.title_status}</p>
+                <p className="text-sm text-gray-300">
+                  {result.seo_score >= 80
+                    ? "Good SEO"
+                    : result.seo_score >= 50
+                    ? "Average SEO"
+                    : "Poor SEO"}
+                </p>
               </div>
 
-              <div className="bg-white/5 p-4 rounded-xl">
-                <p className="text-gray-400">Images Missing Alt</p>
-                <p className="text-xl font-semibold">{result.images_without_alt}</p>
+              <div className="bg-white/10 p-4 rounded-xl">
+                <p className="text-gray-300">Title Status</p>
+                <h2 className="text-2xl font-bold">
+                  {result.title_status}
+                </h2>
               </div>
 
             </div>
 
-            <div className="bg-white/5 p-4 rounded-xl">
-              <p className="text-gray-400">Meta Description</p>
+            <div className="bg-white/10 p-4 rounded-xl">
+              <p className="text-gray-300">Meta Description</p>
               <p>{result.meta_description}</p>
             </div>
 
-            <div className="bg-white/5 p-4 rounded-xl">
-              <p className="text-gray-400">H1 Tags</p>
+            <div className="bg-white/10 p-4 rounded-xl">
+              <p className="text-gray-300">H1 Tags</p>
               <p>{result.h1_tags.join(", ") || "None Found"}</p>
+            </div>
+
+            <div className="bg-white/10 p-4 rounded-xl">
+              <p className="text-gray-300">Images Missing Alt</p>
+              <p>{result.images_without_alt}</p>
             </div>
 
             {/* RECOMMENDATIONS */}
             {tips.length > 0 && (
-              <div className="bg-indigo-500/10 border border-indigo-500/20 p-4 rounded-xl">
-                <p className="text-indigo-300 mb-2 font-semibold">
-                  Recommendations
-                </p>
+            <div className="bg-white/10 p-4 rounded-xl">
+                <p className="text-gray-300 mb-2">Recommendations</p>
 
-                <ul className="list-disc ml-5 space-y-1 text-gray-300">
-                  {tips.map((tip, i) => (
+                <ul className="list-disc ml-5 space-y-1">
+                {tips.map((tip, i) => (
                     <li key={i}>{tip}</li>
-                  ))}
+                ))}
                 </ul>
-              </div>
+            </div>
             )}
-
           </div>
-        )}
+        )
+        
+        }
 
       </div>
     </main>
